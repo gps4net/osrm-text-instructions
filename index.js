@@ -1,6 +1,7 @@
 var languages = require('./languages');
 var instructions = languages.instructions;
 var grammars = languages.grammars;
+var abbreviations = languages.abbreviations;
 
 module.exports = function(version) {
     Object.keys(instructions).forEach(function(code) {
@@ -105,10 +106,25 @@ module.exports = function(version) {
 
             return wayName;
         },
-        compile: function(language, step, options) {
+
+        /**
+         * Formulate a localized text instruction from a step.
+         *
+         * @param  {string} language           Language code.
+         * @param  {object} step               Step including maneuver property.
+         * @param  {object} opts               Additional options.
+         * @param  {string} opts.legIndex      Index of leg in the route.
+         * @param  {string} opts.legCount      Total number of legs in the route.
+         * @param  {array}  opts.classes       List of road classes.
+         * @param  {string} opts.waypointName  Name of waypoint for arrival instruction.
+         *
+         * @return {string} Localized text instruction.
+         */
+        compile: function(language, step, opts) {
             if (!language) throw new Error('No language code provided');
             if (languages.supportedCodes.indexOf(language) === -1) throw new Error('language code ' + language + ' not loaded');
             if (!step.maneuver) throw new Error('No step maneuver provided');
+            var options = opts || {};
 
             var type = step.maneuver.type;
             var modifier = step.maneuver.modifier;
@@ -174,7 +190,14 @@ module.exports = function(version) {
             var wayName = this.getWayName(language, step, options);
 
             // Decide which instruction string to use
-            // Destination takes precedence over name
+            // In order of precedence:
+            //   - exit + destination signage
+            //   - destination signage
+            //   - exit signage
+            //   - junction name
+            //   - road name
+            //   - waypoint name (for arrive maneuver)
+            //   - default
             var instruction;
             if (step.destinations && step.exits && instructionObject.exit_destination) {
                 instruction = instructionObject.exit_destination;
@@ -182,8 +205,12 @@ module.exports = function(version) {
                 instruction = instructionObject.destination;
             } else if (step.exits && instructionObject.exit) {
                 instruction = instructionObject.exit;
+            } else if (step.junction_name && instructionObject.junction_name) {
+                instruction = instructionObject.junction_name;
             } else if (wayName && instructionObject.name) {
                 instruction = instructionObject.name;
+            } else if (options.waypointName && instructionObject.named) {
+                instruction = instructionObject.named;
             } else {
                 instruction = instructionObject.default;
             }
@@ -198,7 +225,7 @@ module.exports = function(version) {
                 firstDestination = destinationRef || destination || '';
             }
 
-            var nthWaypoint = options && options.legIndex >= 0 && options.legIndex !== options.legCount - 1 ? this.ordinalize(language, options.legIndex + 1) : '';
+            var nthWaypoint = options.legIndex >= 0 && options.legIndex !== options.legCount - 1 ? this.ordinalize(language, options.legIndex + 1) : '';
 
             // Replace tokens
             // NOOP if they don't exist
@@ -211,15 +238,17 @@ module.exports = function(version) {
                 'lane_instruction': laneInstruction,
                 'modifier': instructions[language][version].constants.modifier[modifier],
                 'direction': this.directionFromDegree(language, step.maneuver.bearing_after),
-                'nth': nthWaypoint
+                'nth': nthWaypoint,
+                'waypoint_name': options.waypointName,
+                'junction_name': (step.junction_name || '').split(';')[0]
             };
 
             return this.tokenize(language, instruction, replaceTokens, options);
         },
         grammarize: function(language, name, grammar) {
             if (!language) throw new Error('No language code provided');
-            // Process way/rotary name with applying grammar rules if any
-            if (name && grammar && grammars && grammars[language] && grammars[language][version]) {
+            // Process way/rotary/any name with applying grammar rules if any
+            if (grammar && grammars && grammars[language] && grammars[language][version]) {
                 var rules = grammars[language][version][grammar];
                 if (rules) {
                     // Pass original name to rules' regular expressions enclosed with spaces for simplier parsing
@@ -236,6 +265,7 @@ module.exports = function(version) {
 
             return name;
         },
+        abbreviations: abbreviations,
         tokenize: function(language, instruction, tokens, options) {
             if (!language) throw new Error('No language code provided');
             // Keep this function context to use in inline function below (no arrow functions in ES4)
@@ -269,47 +299,6 @@ module.exports = function(version) {
             }
 
             return output;
-        },
-        getBestMatchingLanguage: function(language) {
-            if (languages.instructions[language]) return language;
-
-            var codes = languages.parseLanguageIntoCodes(language);
-            var languageCode = codes.language;
-            var scriptCode = codes.script;
-            var regionCode = codes.region;
-
-            // Same language code and script code (lng-Scpt)
-            if (languages.instructions[languageCode + '-' + scriptCode]) {
-                return languageCode + '-' + scriptCode;
-            }
-
-            // Same language code and region code (lng-CC)
-            if (languages.instructions[languageCode + '-' + regionCode]) {
-                return languageCode + '-' + regionCode;
-            }
-
-            // Same language code (lng)
-            if (languages.instructions[languageCode]) {
-                return languageCode;
-            }
-
-            // Same language code and any script code (lng-Scpx) and the found language contains a script
-            var anyScript = languages.parsedSupportedCodes.find(function (language) {
-                return language.language === languageCode && language.script;
-            });
-            if (anyScript) {
-                return anyScript.locale;
-            }
-
-            // Same language code and any region code (lng-CX)
-            var anyCountry = languages.parsedSupportedCodes.find(function (language) {
-                return language.language === languageCode && language.region;
-            });
-            if (anyCountry) {
-                return anyCountry.locale;
-            }
-
-            return 'en';
         }
     };
 };

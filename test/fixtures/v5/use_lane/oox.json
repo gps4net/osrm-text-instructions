@@ -45,23 +45,35 @@
         "name": ""
     },
     "instructions": {
+        "ar": "الزم اليسار",
+        "da": "Hold til venstre",
         "de": "Links halten",
         "en": "Keep left",
         "eo": "Veturu maldekstre",
-        "es": "Mantengase a la izquierda",
+        "es": "Mantente a la izquierda",
         "es-ES": "Mantente a la izquierda",
-        "fr": "Serrer à gauche",
+        "fi": "Pysy vasemmalla",
+        "fr": "Tenir la gauche",
+        "he": "היצמד לשמאל",
+        "hu": "Tartson balra",
         "id": "Tetap di kiri",
         "it": "Mantieni la sinistra",
+        "ja": "左車線を進む",
+        "ko": "좌측차선 유지",
+        "my": "ဘယ်ဘက်သို့ဆက်သွားပါ",
         "nl": "Links aanhouden",
+        "no": "Hold til venstre",
         "pl": "Trzymaj się lewej strony",
         "pt-BR": "Mantenha-se à esquerda",
+        "pt-PT": "Mantenha-se à esquerda",
         "ro": "Țineți dreapta",
         "ru": "Держитесь левее",
+        "sl": "Držite se levo",
         "sv": "Håll till vänster",
         "tr": "Solda kalın",
         "uk": "Тримайтесь ліворуч",
         "vi": "Đi bên trái",
-        "zh-Hans": "靠左直行"
+        "yo": "Pa osi",
+        "zh-Hans": "靠左行驶"
     }
 }

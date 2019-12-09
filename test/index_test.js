@@ -248,91 +248,6 @@ tape.test('v5 compile', function(t) {
         assert.end();
     });
 
-    t.test('en-US fallback to en', function(assert) {
-        var language = v5Compiler.getBestMatchingLanguage('en-us');
-
-        assert.equal(v5Compiler.compile(language, {
-            maneuver: {
-                type: 'turn',
-                modifier: 'left'
-            },
-            name: 'Way Name'
-        }), 'Turn left onto Way Name');
-
-        assert.end();
-    });
-
-    t.test('zh-CN fallback to zh-Hans', function(assert) {
-        var language = v5Compiler.getBestMatchingLanguage('zh-CN');
-
-        assert.equal(v5Compiler.compile(language, {
-            maneuver: {
-                type: 'turn',
-                modifier: 'left'
-            },
-            name: 'Way Name'
-        }), '左转，上Way Name');
-
-        assert.end();
-    });
-
-    t.test('zh-Hant fallback to zh-Hanz', function(assert) {
-        var language = v5Compiler.getBestMatchingLanguage('zh-Hant');
-
-        assert.equal(v5Compiler.compile(language, {
-            maneuver: {
-                type: 'turn',
-                modifier: 'left'
-            },
-            name: 'Way Name'
-        }), '左转，上Way Name');
-
-        assert.end();
-    });
-
-    t.test('zh-Hant-TW fallback to zh-Hant', function(assert) {
-        var language = v5Compiler.getBestMatchingLanguage('zh-Hant-TW');
-
-        assert.equal(v5Compiler.compile(language, {
-            maneuver: {
-                type: 'turn',
-                modifier: 'left'
-            },
-            name: 'Way Name'
-        }), '左转，上Way Name');
-
-        assert.end();
-    });
-
-    t.test('es-MX fallback to es', function(assert) {
-        var language = v5Compiler.getBestMatchingLanguage('es-MX');
-
-        assert.equal(v5Compiler.compile(language, {
-            maneuver: {
-                type: 'turn',
-                modifier: 'straight'
-            },
-            name: 'Way Name'
-        }), 'Ve recto en Way Name');
-
-        assert.end();
-    });
-
-    t.test('getBestMatchingLanguage', function(t) {
-        t.equal(v5Compiler.getBestMatchingLanguage('foo'), 'en');
-        t.equal(v5Compiler.getBestMatchingLanguage('en-US'), 'en');
-        t.equal(v5Compiler.getBestMatchingLanguage('zh-CN'), 'zh-Hans');
-        t.equal(v5Compiler.getBestMatchingLanguage('zh-Hant'), 'zh-Hans');
-        t.equal(v5Compiler.getBestMatchingLanguage('zh-Hant-TW'), 'zh-Hans');
-        t.equal(v5Compiler.getBestMatchingLanguage('zh'), 'zh-Hans');
-        t.equal(v5Compiler.getBestMatchingLanguage('es-MX'), 'es');
-        t.equal(v5Compiler.getBestMatchingLanguage('es-ES'), 'es-ES');
-        t.equal(v5Compiler.getBestMatchingLanguage('pt-PT'), 'pt');
-        t.equal(v5Compiler.getBestMatchingLanguage('pt'), 'pt');
-        t.equal(v5Compiler.getBestMatchingLanguage('pt-pt'), 'pt');
-        t.end();
-    });
-
     t.test('fixtures match generated instructions', function(assert) {
         // pre-load instructions
         var version = 'v5';
@@ -355,6 +270,9 @@ tape.test('v5 compile', function(t) {
                         options = {
                             'instruction_one': fixture.options.instruction_one,
                             'instruction_two': fixture.options.instruction_two,
+                            'exit': fixture.options.exit,
+                            'name': fixture.options.name,
+                            'ref': fixture.options.ref,
                             distance: fixture.options.distance
                         };
                     }
@@ -379,9 +297,11 @@ tape.test('v5 compile', function(t) {
                         options.legIndex = fixture.options.legIndex;
                         options.legCount = fixture.options.legCount;
                         options.classes = fixture.options.classes;
+                        options.waypointName = fixture.options.waypointName;
                     }
-
                     Object.keys(fixture.instructions).forEach((l) => {
+                        // ignore custom instructions that don't get compiled
+                        if (!fixture.step) return;
                         assert.equal(
                             instructionsPerLanguage.compile(l, fixture.step, options),
                             fixture.instructions[l],

@@ -54,40 +54,65 @@
             "two linked by distance": "{instruction_one} danach in {distance} {instruction_two}",
             "two linked": "{instruction_one} danach {instruction_two}",
             "one in distance": "In {distance}, {instruction_one}",
-            "name and ref": "{name} ({ref})"
+            "name and ref": "{name} ({ref})",
+            "exit with number": "exit {exit}"
         },
         "arrive": {
             "default": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}"
             },
             "left": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}, es befindet sich links"
             },
             "right": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}, es befindet sich rechts"
             },
             "sharp left": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}, es befindet sich links"
             },
             "sharp right": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}, es befindet sich rechts"
             },
             "slight right": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich rechts",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}, es befindet sich rechts"
             },
             "slight left": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich links",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}, es befindet sich links"
             },
             "straight": {
                 "default": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich geradeaus",
-                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich geradeaus"
+                "upcoming": "Sie haben Ihr {nth} Ziel erreicht, es befindet sich geradeaus",
+                "short": "Sie haben Ihr {nth} Ziel erreicht",
+                "short-upcoming": "Sie haben Ihr {nth} Ziel erreicht",
+                "named": "Sie haben Ihr {waypoint_name}, es befindet sich geradeaus"
             }
         },
         "continue": {
@@ -107,58 +132,66 @@
             "sharp left": {
                 "default": "Scharf links",
                 "name": "Scharf links weiterfahren auf {way_name}",
-                "destination": "Scharf links Richtung {destination}"
+                "destination": "Scharf links Richtung {destination}",
+                "junction_name": "Scharf links weiterfahren an {junction_name}"
             },
             "sharp right": {
                 "default": "Scharf rechts",
                 "name": "Scharf rechts weiterfahren auf {way_name}",
-                "destination": "Scharf rechts Richtung {destination}"
+                "destination": "Scharf rechts Richtung {destination}",
+                "junction_name": "Scharf rechts weiterfahren an {junction_name}"
             },
             "slight left": {
                 "default": "Leicht links",
                 "name": "Leicht links weiter auf {way_name}",
-                "destination": "Leicht links weiter Richtung {destination}"
+                "destination": "Leicht links weiter Richtung {destination}",
+                "junction_name": "Leicht links weiter an {junction_name}"
             },
             "slight right": {
                 "default": "Leicht rechts weiter",
                 "name": "Leicht rechts weiter auf {way_name}",
-                "destination": "Leicht rechts weiter Richtung {destination}"
+                "destination": "Leicht rechts weiter Richtung {destination}",
+                "junction_name": "Leicht rechts weiter an {junction_name}"
             },
             "uturn": {
                 "default": "180°-Wendung",
                 "name": "180°-Wendung auf {way_name}",
-                "destination": "180°-Wendung Richtung {destination}"
+                "destination": "180°-Wendung Richtung {destination}",
+                "junction_name": "180°-Wendung an {junction_name}"
             }
         },
         "depart": {
             "default": {
                 "default": "Fahren Sie Richtung {direction}",
                 "name": "Fahren Sie Richtung {direction} auf {way_name}",
-                "namedistance": "Head {direction} on {way_name} for {distance}"
+                "namedistance": "Fahren Sie Richtung {direction} auf {way_name} für {distance}"
             }
         },
         "end of road": {
             "default": {
                 "default": "{modifier} abbiegen",
                 "name": "{modifier} abbiegen auf {way_name}",
-                "destination": "{modifier} abbiegen Richtung {destination}"
+                "destination": "{modifier} abbiegen Richtung {destination}",
+                "junction_name": "{modifier} abbiegen an {junction_name}"
             },
             "straight": {
                 "default": "Geradeaus weiterfahren",
                 "name": "Geradeaus weiterfahren auf {way_name}",
-                "destination": "Geradeaus weiterfahren Richtung {destination}"
+                "destination": "Geradeaus weiterfahren Richtung {destination}",
+                "junction_name": "Geradeaus weiterfahren an {junction_name}"
             },
             "uturn": {
                 "default": "180°-Wendung am Ende der Straße",
                 "name": "180°-Wendung auf {way_name} am Ende der Straße",
-                "destination": "180°-Wendung Richtung {destination} am Ende der Straße"
+                "destination": "180°-Wendung Richtung {destination} am Ende der Straße",
+                "junction_name": "180°-Wendung an {junction_name}"
             }
         },
         "fork": {
             "default": {
                 "default": "{modifier} halten an der Gabelung",
                 "name": "{modifier} halten an der Gabelung auf {way_name}",
-                "destination": "{modifier}  halten an der Gabelung Richtung {destination}"
+                "destination": "{modifier} halten an der Gabelung Richtung {destination}"
             },
             "slight left": {
                 "default": "Links halten an der Gabelung",
@@ -172,13 +205,13 @@
             },
             "sharp left": {
                 "default": "Scharf links abbiegen an der Gabelung",
-                "name": "Scharf links abbiegen an der Gabelung auf {way_name}",
-                "destination": "Scharf links abbiegen an der Gabelung Richtung {destination}"
+                "name": "Scharf links auf {way_name}",
+                "destination": "Scharf links Richtung {destination}"
             },
             "sharp right": {
                 "default": "Scharf rechts abbiegen an der Gabelung",
-                "name": "Scharf rechts abbiegen an der Gabelung auf {way_name}",
-                "destination": "Scharf rechts abbiegen an der Gabelung Richtung {destination}"
+                "name": "Scharf rechts auf {way_name}",
+                "destination": "Scharf rechts Richtung {destination}"
             },
             "uturn": {
                 "default": "180°-Wendung",
@@ -400,24 +433,24 @@
         },
         "roundabout turn": {
             "default": {
-                "default": "Am Kreisverkehr {modifier}",
-                "name": "Am Kreisverkehr {modifier} auf {way_name}",
-                "destination": "Am Kreisverkehr {modifier} Richtung {destination}"
+                "default": "{modifier} abbiegen",
+                "name": "{modifier} abbiegen auf {way_name}",
+                "destination": "{modifier} abbiegen Richtung {destination}"
             },
             "left": {
-                "default": "Am Kreisverkehr links abbiegen",
-                "name": "Am Kreisverkehr links auf {way_name}",
-                "destination": "Am Kreisverkehr links Richtung {destination}"
+                "default": "Links abbiegen",
+                "name": "Links abbiegen auf {way_name}",
+                "destination": "Links abbiegen Richtung {destination}"
             },
             "right": {
-                "default": "Am Kreisverkehr rechts abbiegen",
-                "name": "Am Kreisverkehr rechts auf {way_name}",
-                "destination": "Am Kreisverkehr rechts Richtung {destination}"
+                "default": "Rechts abbiegen",
+                "name": "Rechts abbiegen auf {way_name}",
+                "destination": "Rechts abbiegen Richtung {destination}"
             },
             "straight": {
-                "default": "Am Kreisverkehr geradeaus weiterfahren",
-                "name": "Am Kreisverkehr geradeaus weiterfahren auf {way_name}",
-                "destination": "Am Kreisverkehr geradeaus weiterfahren Richtung {destination}"
+                "default": "Geradeaus weiterfahren",
+                "name": "Geradeaus weiterfahren auf {way_name}",
+                "destination": "Geradeaus weiterfahren Richtung {destination}"
             }
         },
         "exit roundabout": {
@@ -468,22 +501,26 @@
             "default": {
                 "default": "{modifier} abbiegen",
                 "name": "{modifier} abbiegen auf {way_name}",
-                "destination": "{modifier} abbiegen Richtung {destination}"
+                "destination": "{modifier} abbiegen Richtung {destination}",
+                "junction_name": "Make a {modifier} at {junction_name}"
             },
             "left": {
                 "default": "Links abbiegen",
                 "name": "Links abbiegen auf {way_name}",
-                "destination": "Links abbiegen Richtung {destination}"
+                "destination": "Links abbiegen Richtung {destination}",
+                "junction_name": "Links abbiegen an {junction_name}"
             },
             "right": {
                 "default": "Rechts abbiegen",
                 "name": "Rechts abbiegen auf {way_name}",
-                "destination": "Rechts abbiegen Richtung {destination}"
+                "destination": "Rechts abbiegen Richtung {destination}",
+                "junction_name": "Rechts abbiegen an {junction_name}"
             },
             "straight": {
                 "default": "Geradeaus weiterfahren",
                 "name": "Geradeaus weiterfahren auf {way_name}",
-                "destination": "Geradeaus weiterfahren Richtung {destination}"
+                "destination": "Geradeaus weiterfahren Richtung {destination}",
+                "junction_name": "Geradeaus weiterfahren an {junction_name}"
             }
         },
         "use lane": {

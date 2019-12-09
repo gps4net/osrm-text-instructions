@@ -45,23 +45,35 @@
         "name": ""
     },
     "instructions": {
+        "ar": "الزم الوسط",
+        "da": "Benyt midterste spor",
         "de": "Mittlere Spur nutzen",
         "en": "Keep in the middle",
         "eo": "Veturu meze",
-        "es": "Mantengase en el medio",
+        "es": "Mantente en el medio",
         "es-ES": "Mantente en el medio",
+        "fi": "Pysy keskellä",
         "fr": "Rester au milieu",
+        "he": "המשך בנתיב האמצעי",
+        "hu": "Maradjon középen",
         "id": "Tetap di tengah",
         "it": "Rimani in mezzo",
+        "ja": "真ん中の車線を進む",
+        "ko": "중앙유지",
+        "my": "အလယ်တွင်ဆက်နေပါ",
         "nl": "In het midden blijven",
+        "no": "Hold deg i midten",
         "pl": "Trzymaj się środka",
         "pt-BR": "Mantenha-se ao centro",
+        "pt-PT": "Mantenha-se ao meio",
         "ro": "Țineți pe mijloc",
         "ru": "Держитесь посередине",
+        "sl": "Ostanite na sredini",
         "sv": "Håll till mitten",
         "tr": "Ortada kalın",
         "uk": "Тримайтесь в середині",
         "vi": "Đi vào giữa",
-        "zh-Hans": "保持在道路中间直行"
+        "yo": "Jeki ni arin",
+        "zh-Hans": "保持在道路中间行驶"
     }
 }

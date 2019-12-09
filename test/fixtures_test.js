@@ -33,6 +33,42 @@ tape.test('verify existence/update fixtures', function(assert) {
         return result;
     }
 
+    function findPhrase(memo, key) {
+        if (memo === null) return null;
+        if (!memo[key]) return null;
+
+        return memo[key];
+    }
+
+    function customCompile(phrasePath) {
+        var result = {};
+        supportedCodes.forEach((lang) => {
+            var langKeys = [lang, 'v5'].concat(phrasePath);
+            result[lang] = langKeys.reduce(findPhrase, instructions);
+        });
+
+        return result;
+    }
+
+    function checkOrWriteCustom(basePath, fileName, phrasePath) {
+        var fileToWrite = path.join(basePath, `${fileName}.json`);
+        if (process.env.UPDATE) {
+            var data = {
+                instructions: customCompile(phrasePath)
+            };
+            fs.writeFileSync(
+                fileToWrite,
+                JSON.stringify(data, null, 4) + '\n'
+            );
+            assert.ok(true, `updated ${phrasePath}`);
+        } else {
+            assert.ok(
+                fs.existsSync(fileToWrite),
+                `verified existence of ${phrasePath}`
+            );
+        }
+    }
+
     function checkOrWrite(step, p, options) {
         var fileName = `${p}.json`;
         var testName = p
@@ -54,7 +90,7 @@ tape.test('verify existence/update fixtures', function(assert) {
             );
             assert.ok(true, `updated ${testName}`);
         } else {
-            // check for existance
+            // check for existence
             assert.ok(
                 fs.existsSync(fileName),
                 `verified existence of ${testName}`
@@ -92,9 +128,16 @@ tape.test('verify existence/update fixtures', function(assert) {
             exits: '4A;4B'
         });
         checkOrWrite(step, `${basePath}_exit_destination`);
+
+        // junction_name
+        step = Object.assign(clone(baseStep), {
+            name: 'Way Name',
+            'junction_name': 'Shibuya Crossing'
+        });
+        checkOrWrite(step, `${basePath}_junction_name`);
     }
 
-    ['modes', 'other', 'arrive_waypoint', 'arrive_waypoint_last'].concat(constants.types).forEach((type) => {
+    ['modes', 'other', 'arrive_waypoint', 'arrive_waypoint_last', 'arrive_waypoint_name', 'arrive_upcoming', 'arrive_short', 'arrive_short_upcoming'].concat(constants.types).forEach((type) => {
         var basePath = path.join(__dirname, 'fixtures', 'v5', underscorify(type));
         var baseStep, step;
 
@@ -120,6 +163,30 @@ tape.test('verify existence/update fixtures', function(assert) {
                     name: 'Street Name'
                 };
                 checkOrWrite(step, path.join(basePath, underscorify(modifier)));
+            });
+            break;
+        case 'arrive_upcoming':
+            var fixturePath = path.join(__dirname, 'fixtures', 'v5', 'arrive_upcoming');
+            checkOrWriteCustom(fixturePath, 'no_modifier', ['arrive', 'default', 'upcoming']);
+            constants.modifiers.forEach((modifier) => {
+                if (modifier === 'uturn') return;
+                checkOrWriteCustom(fixturePath, modifier, ['arrive', modifier, 'upcoming']);
+            });
+            break;
+        case 'arrive_short':
+            fixturePath = path.join(__dirname, 'fixtures', 'v5', 'arrive_short');
+            checkOrWriteCustom(fixturePath, 'no_modifier', ['arrive', 'default', 'short']);
+            constants.modifiers.forEach((modifier) => {
+                if (modifier === 'uturn') return;
+                checkOrWriteCustom(fixturePath, modifier, ['arrive', modifier, 'short']);
+            });
+            break;
+        case 'arrive_short_upcoming':
+            fixturePath = path.join(__dirname, 'fixtures', 'v5', 'arrive_short_upcoming');
+            checkOrWriteCustom(fixturePath, 'no_modifier', ['arrive', 'default', 'short-upcoming']);
+            constants.modifiers.forEach((modifier) => {
+                if (modifier === 'uturn') return;
+                checkOrWriteCustom(fixturePath, modifier, ['arrive', modifier, 'short-upcoming']);
             });
             break;
         case 'arrive_waypoint':
@@ -171,6 +238,34 @@ tape.test('verify existence/update fixtures', function(assert) {
                 checkOrWrite(step, path.join(basePath, underscorify(modifier)), {
                     legIndex: 1,
                     legCount: 2
+                });
+            });
+            break;
+        case 'arrive_waypoint_name':
+            step = {
+                maneuver: {
+                    type: 'arrive'
+                },
+                name: 'Street Name'
+            };
+            checkOrWrite(step, path.join(basePath, 'no_modifier'), {
+                legIndex: 0,
+                legCount: 2,
+                waypointName: 'Somewhere'
+            });
+
+            constants.modifiers.forEach((modifier) => {
+                var step = {
+                    maneuver: {
+                        type: 'arrive',
+                        modifier: modifier
+                    },
+                    name: 'Street Name'
+                };
+                checkOrWrite(step, path.join(basePath, underscorify(modifier)), {
+                    legIndex: 0,
+                    legCount: 2,
+                    waypointName: 'Somewhere'
                 });
             });
             break;
@@ -551,10 +646,10 @@ tape.test('verify existence/update fixtures', function(assert) {
             );
             assert.ok(true, `updated ${phrase}`);
         } else {
-            // check for existance
+            // check for existence
             assert.ok(
                 fs.existsSync(fileName),
-                `verified existance of ${phrase}`
+                `verified existence of ${phrase}`
             );
         }
     }
@@ -583,6 +678,17 @@ tape.test('verify existence/update fixtures', function(assert) {
         checkOrWritePhrase(basePath, 'one in distance', {
             'instruction_one': 'Do something',
             distance: distance
+        });
+
+        // name and ref
+        checkOrWritePhrase(basePath, 'name and ref', {
+            name: 'Metropolis',
+            ref: 123
+        });
+
+        // exit with number
+        checkOrWritePhrase(basePath, 'exit with number', {
+            exit: '123A'
         });
     }
 
